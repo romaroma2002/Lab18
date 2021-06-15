@@ -1,0 +1,43 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit3.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm3 *Form3;
+//---------------------------------------------------------------------------
+__fastcall TForm3::TForm3(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::Button1Click(TObject *Sender)
+{
+if(Edit1->Text != "" && ComboBox1->Text != ""){
+        string dtype;
+        if(ComboBox1->Text == "Ціле число - int") dtype = "int";
+        else if(ComboBox1->Text == "Дробове число - double") dtype = "double";
+        else if(ComboBox1->Text == "Текст - string") dtype = "string";
+        else if(ComboBox1->Text == "Логічний - bool") dtype = "bool";
+        shown_db.cols[shown_db.cols_n].name = Edit1->Text.c_str();
+        shown_db.cols[shown_db.cols_n].datatype = dtype;
+        shown_db.cols_n += 1;
+        db = shown_db;
+        Form1->update_stringgrid();
+        Form3->Close();
+}
+else{
+        MessageDlg("Не всі поля заповнені", mtError, TMsgDlgButtons()<<mbOK,0);
+}
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm3::FormShow(TObject *Sender)
+{
+Edit1->Clear();
+ComboBox1->ItemIndex = -1;
+}
+//---------------------------------------------------------------------------

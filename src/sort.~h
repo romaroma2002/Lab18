@@ -1,0 +1,123 @@
+//---------------------------------------------------------------------------
+
+
+
+void swap_rows(int row_id1, int row_id2){
+        for(int i = 0; i < shown_db.cols_n; i++){
+                swap(shown_db.cols[i].values[row_id1], shown_db.cols[i].values[row_id2]);
+        }
+}
+
+
+
+//---------------------------------------------------------------------------
+
+
+
+void string_AZ(int col_index){
+	for(int i = 0; i < shown_db.rows_n; i++){
+                for(int j = i + 1; j < shown_db.rows_n; j++){
+                        if(strcmp(shown_db.cols[col_index].values[i].c_str(), shown_db.cols[col_index].values[j].c_str())>0){
+                                swap_rows(i, j);
+                        }
+                }
+	}
+}
+
+
+void string_ZA(int col_index, string value){
+	for(int i = 0; i < shown_db.rows_n; i++){
+                for(int j = i + 1; j < shown_db.rows_n; j++){
+                        if(strcmp(shown_db.cols[col_index].values[i].c_str(), shown_db.cols[col_index].values[j].c_str())<0){
+                                swap_rows(i, j);
+                        }
+                }
+	}
+}
+
+
+
+//---------------------------------------------------------------------------
+
+
+
+void num_12(int col_index, int value){
+	for(int j = 0; j < shown_db.rows_n; j++){
+		int cell_value = str_to_int(shown_db.cols[col_index].values[j]);
+		if(cell_value == value){
+			for(int i = 0; i < shown_db.cols_n; i++){
+				buf_db.cols[i].values[buf_db.rows_n] = shown_db.cols[i].values[j];
+			}
+			buf_db.rows_n += 1;
+		}
+	}
+	shown_db = buf_db;
+}
+
+
+
+void num_21(int col_index){
+	for(int j = 0; j < shown_db.rows_n; j++){
+		int cell_value = str_to_int(shown_db.cols[col_index].values[j]);
+		if(cell_value != value){
+			for(int i = 0; i < shown_db.cols_n; i++){
+				buf_db.cols[i].values[buf_db.rows_n] = shown_db.cols[i].values[j];
+			}
+			buf_db.rows_n += 1;
+		}
+	}
+	shown_db = buf_db;
+}  
+
+
+
+//---------------------------------------------------------------------------
+
+
+
+void bool_tf(int col_index){
+	for(int j = 0; j < shown_db.rows_n; j++){
+		if(shown_db.cols[col_index].values[j] == "true"){
+			for(int i = 0; i < shown_db.cols_n; i++){
+				buf_db.cols[i].values[buf_db.rows_n] = shown_db.cols[i].values[j];
+			}
+			buf_db.rows_n += 1;
+		}
+	}
+	shown_db = buf_db;
+}
+
+
+
+void bool_ft(int col_index){
+	for(int j = 0; j < shown_db.rows_n; j++){
+		if(shown_db.cols[col_index].values[j] == "false"){
+			for(int i = 0; i < shown_db.cols_n; i++){
+				buf_db.cols[i].values[buf_db.rows_n] = shown_db.cols[i].values[j];
+			}
+			buf_db.rows_n += 1;
+		}
+	}
+	shown_db = buf_db;
+}
+
+
+
+//---------------------------------------------------------------------------
+
+          */
+
+void sort_decision(int col_index, string sort){
+	if(sort=="Від А до Я")
+		string_AZ(col_index);
+	else if(sort=="Від Я до А")
+		string_ZA(col_index);
+	/*else if(sort=="Від меншого до більшого")
+		num_12(col_index);
+	else if(sort=="Від більшого до меншого")
+		num_21(col_index);
+	else if(sort=="Спочатку true")
+		bool_tf(col_index);
+	else if(sort=="Спочатку false")
+		bool_ft(col_index);    */
+}
